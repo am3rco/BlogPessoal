@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,14 +25,15 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotNull(message = "O Atributo Nome é Obrigatório!")
+	@NotNull(message = "O atributo Nome é Obrigatório!")
 	private String nome;
 
-	@NotNull(message = "O Atributo Usuário é Obrigatório!")
-	@Email(message = "O Atributo Usuário deve ser um email válido!")
+	@Schema(example = "email@email.com.br")
+	@NotNull(message = "O atributo Usuário é Obrigatório!")
+	@Email(message = "O atributo Usuário deve ser um email válido!")
 	private String usuario;
 
-	@NotBlank(message = "O Atributo Senha é Obrigatório!")
+	@NotBlank(message = "O atributo Senha é Obrigatório!")
 	@Size(min = 8, message = "A Senha deve ter no mínimo 8 caracteres")
 	private String senha;
 
@@ -42,6 +44,18 @@ public class Usuario {
 	@JsonIgnoreProperties("usuario")
 	private List<Postagem> postagem;
 
+	/* Métodos Construtores  */
+
+	public Usuario(Long id, String nome, String usuario, String senha, String foto) {
+		this.id = id;
+		this.nome = nome;
+		this.usuario = usuario;
+		this.senha = senha;
+		this.foto = foto;
+	}
+	
+	public Usuario() { }
+	
 	/* Insira os Getters and Setters */
 
 	public Long getId() {
@@ -91,5 +105,5 @@ public class Usuario {
 	public void setPostagem(List<Postagem> postagem) {
 		this.postagem = postagem;
 	}
-	
+
 }
